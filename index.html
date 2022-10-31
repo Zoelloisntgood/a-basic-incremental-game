@@ -1,0 +1,33 @@
+<html>
+    <head><title>A Basic Incremental Game</title></head>
+    <body>
+            <h1>Points: <span id ="points">0</span></h1>
+            <script>
+                var points = 0;
+
+                var upgradecost = 15;
+                var upgrade = 0;
+
+                function buyUpgrade() {
+                    if (points >= upgradecost) {
+                        points -= upgradecost;
+                        upgrade += 1;
+                        document.getElementById("points").innerHTML = points;
+                        document.getElementById("upgradecost").innerHTML = upgradecost;
+                        document.getElementById("upgrade").innerHTML = upgrade;
+                    }
+                }
+
+                    setInterval(function() {
+                        points = points + upgrade + 1;
+                        document.getElementById("points").innerHTML = points;
+                    },100);
+
+                document.getElementById("points").innerHTML = points;
+            </script>
+            <button onclick="buyUpgrade()">
+                Upgrade: <span id ="upgradecost">15</span> Points | Amount: <span id ="upgrade">0</span>
+                
+            </button>
+    </body>
+</html>
