@@ -48,7 +48,7 @@
                     if (points >= autoupgradecost) {
                         points -= autoupgradecost;
                         autoupgrade += 1;
-                        autoupgradecost = autoupgradecost * 2
+                        autoupgradecost = autoupgradecost + 250
                         document.getElementById("points").innerHTML = points;
                         document.getElementById("autoupgradecost").innerHTML = autoupgradecost;
                         document.getElementById("autoupgrade").innerHTML = autoupgrade;
@@ -57,7 +57,7 @@
                 function buySuperUpgrade() {
                     if (upgrade >= superupgradecost) {
                         upgrade -= superupgradecost;
-                        superupgrade += 1;
+                        superupgrade += 1 + rebirth;
                         superupgradecost += 5
                         document.getElementById("upgradecost").innerHTML = upgradecost;
                         document.getElementById("upgrade").innerHTML = upgrade;
@@ -68,7 +68,7 @@
                 function buyUpgrade() {
                     if (points >= upgradecost) {
                         points -= upgradecost;
-                        upgrade += 1 + superupgrade;
+                        upgrade += (1 + superupgrade) * (rebirth + 1);
                         upgradecost += 5
                         document.getElementById("points").innerHTML = points;
                         document.getElementById("upgradecost").innerHTML = upgradecost;
@@ -78,15 +78,11 @@
 
 
                     setInterval(function() {
-                        points = (points + upgrade + 1) * (rebirth + 1);
+                        points = (points + upgrade + 1) + (rebirth + 1);
                         document.getElementById("points").innerHTML = points;
                     },100);
                     setInterval(function() {
-                        upgrade += autoupgrade * (rebirth + 1);
-                        document.getElementById("upgrade").innerHTML = upgrade;
-                    },100);
-                    setInterval(function() {
-                        upgrade += superupgrade * (rebirth + 1);
+                        upgrade += autoupgrade * (superupgrade + 1) * (rebirth + 1);
                         document.getElementById("upgrade").innerHTML = upgrade;
                     },100);
                     setInterval(function() {
