@@ -17,13 +17,48 @@
                 var upgrade = 0;
                 var superupgradecost = 25;
                 var superupgrade = 0;
+                var autoupgradecost = 250;
+                var autoupgrade = 0;
+                var rebirthamount = 0;
+                var rebirth = 0;
 
+                function buyRebirth() {
+                    if (superupgrade >= 50) {
+                        rebirth += Math.floor(superupgrade / 50);
+                        superupgrade = 0;
+                        superupgradecost = 25;
+                        upgrade = 0;
+                        upgradecost = 15;
+                        autoupgrade = 0;
+                        autoupgradecost = 250;
+                        points = 0;
+
+                        document.getElementById("upgradecost").innerHTML = upgradecost;
+                        document.getElementById("upgrade").innerHTML = upgrade;
+                        document.getElementById("superupgradecost").innerHTML = superupgradecost;
+                        document.getElementById("superupgrade").innerHTML = superupgrade;
+                        document.getElementById("autoupgradecost").innerHTML = autoupgradecost;
+                        document.getElementById("autoupgrade").innerHTML = autoupgrade;
+                        document.getElementById("points").innerHTML = points;
+                        document.getElementById("rebirthamount").innerHTML = rebirthamount;
+                        document.getElementById("rebirth").innerHTML = rebirth;
+                    }
+                }
+                function buyAutoUpgrade() {
+                    if (points >= autoupgradecost) {
+                        points -= autoupgradecost;
+                        autoupgrade += 1;
+                        autoupgradecost = autoupgradecost * 2
+                        document.getElementById("points").innerHTML = points;
+                        document.getElementById("autoupgradecost").innerHTML = autoupgradecost;
+                        document.getElementById("autoupgrade").innerHTML = autoupgrade;
+                    }
+                }
                 function buySuperUpgrade() {
                     if (upgrade >= superupgradecost) {
                         upgrade -= superupgradecost;
                         superupgrade += 1;
                         superupgradecost += 5
-                        document.getElementById("points").innerHTML = points;
                         document.getElementById("upgradecost").innerHTML = upgradecost;
                         document.getElementById("upgrade").innerHTML = upgrade;
                         document.getElementById("superupgradecost").innerHTML = superupgradecost;
@@ -41,18 +76,41 @@
                     }
                 }
 
+
                     setInterval(function() {
-                        points = points + upgrade + 1;
+                        points = (points + upgrade + 1) * (rebirth + 1);
                         document.getElementById("points").innerHTML = points;
                     },100);
+                    setInterval(function() {
+                        upgrade += autoupgrade * (rebirth + 1);
+                        document.getElementById("upgrade").innerHTML = upgrade;
+                    },100);
+                    setInterval(function() {
+                        upgrade += superupgrade * (rebirth + 1);
+                        document.getElementById("upgrade").innerHTML = upgrade;
+                    },100);
+                    setInterval(function() {
+                        rebirthamount = Math.floor(superupgrade / 50);
+                        document.getElementById("rebirthamount").innerHTML = rebirthamount;
+                    },10);
 
                 document.getElementById("points").innerHTML = points;
             </script>
             <button onclick="buyUpgrade()" style="background-color: #d00000">
                 Upgrade: <span id ="upgradecost">15</span> Points | Amount: <span id ="upgrade">0</span>
             </button>
+            <button onclick="buyAutoUpgrade()" style="background-color: #808080">
+                Auto Upgrade: <span id ="autoupgradecost">250</span> Points | Amount: <span id ="autoupgrade">0</span>
+            </button>
+            <br>
+            <br>
             <button onclick="buySuperUpgrade()" style="background-color: #0000ff">
                 Super Upgrade: <span id ="superupgradecost">25</span> Upgrades | Amount: <span id ="superupgrade">0</span>
+            </button>
+            <br>
+            <br>
+            <button onclick="buyRebirth()" style="background-color: #0088ff">
+                You Will Get <span id ="rebirthamount">0</span> Rebirth(s). | Amount: <span id ="rebirth">0</span>
             </button>
     </body>
 </html>
