@@ -1,5 +1,13 @@
 <html>
-    <head><title>A Basic Incremental Game</title></head>
+        <head>
+            <title>A Basic Incremental Game</title>
+            <style> 
+            body{
+                background-color: #202020;
+                color: #ffffff;
+            }
+            </style>
+        </head>
     <body>
             <h1>Points: <span id ="points">0</span></h1>
             <script>
@@ -7,11 +15,26 @@
 
                 var upgradecost = 15;
                 var upgrade = 0;
+                var superupgradecost = 25;
+                var superupgrade = 0;
 
+                function buySuperUpgrade() {
+                    if (upgrade >= superupgradecost) {
+                        upgrade -= superupgradecost;
+                        superupgrade += 1;
+                        superupgradecost += 5
+                        document.getElementById("points").innerHTML = points;
+                        document.getElementById("upgradecost").innerHTML = upgradecost;
+                        document.getElementById("upgrade").innerHTML = upgrade;
+                        document.getElementById("superupgradecost").innerHTML = superupgradecost;
+                        document.getElementById("superupgrade").innerHTML = superupgrade;
+                    }
+                }
                 function buyUpgrade() {
                     if (points >= upgradecost) {
                         points -= upgradecost;
-                        upgrade += 1;
+                        upgrade += 1 + superupgrade;
+                        upgradecost += 5
                         document.getElementById("points").innerHTML = points;
                         document.getElementById("upgradecost").innerHTML = upgradecost;
                         document.getElementById("upgrade").innerHTML = upgrade;
@@ -25,9 +48,11 @@
 
                 document.getElementById("points").innerHTML = points;
             </script>
-            <button onclick="buyUpgrade()">
+            <button onclick="buyUpgrade()" style="background-color: #d00000">
                 Upgrade: <span id ="upgradecost">15</span> Points | Amount: <span id ="upgrade">0</span>
-                
+            </button>
+            <button onclick="buySuperUpgrade()" style="background-color: #0000ff">
+                Super Upgrade: <span id ="superupgradecost">25</span> Upgrades | Amount: <span id ="superupgrade">0</span>
             </button>
     </body>
 </html>
