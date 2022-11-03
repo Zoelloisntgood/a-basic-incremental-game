@@ -26,14 +26,27 @@
                 var autorebirthamount = 1000;
                 var autorebirth = 0;
                 var superpoints = 0;
+                var finites = 0;
+                var finitesbuffcost = 1000;
+                var finitesbuff = 0;
 
-                function buyAutoRebirth() {
-                    if (rebirth >= autorebirthcost) {
-                        rebirth -= autorebirthcost;
-                        autorebirth += 1;
-                        autorebirthcost = Math.round(autorebirthcost * 2)
+                function FinitesBuff() {
+                    if (superpoints >= finitesbuffcost) {
+                        superpoints -= finitesbuffcost;
+                        finitesbuff += 1;
+                        finitesbuffcost = Math.round(finitesbuffcost * 1.45)
                         document.getElementById("points").innerHTML = rebirth;
-                        document.getElementById("autorebirthcost").innerHTML = autorebirthcost;
+                        document.getElementById("finitesbuffcost").innerHTML = finitesbuffcost;
+                        document.getElementById("finitesbuff").innerHTML = finitesbuff;
+                    }
+                }
+                function buyAutoRebirth() {
+                    if (rebirth >= autorebirthamount) {
+                        rebirth -= autorebirthamount;
+                        autorebirth += 1;
+                        autorebirthamount = Math.round(autorebirthamount * 2)
+                        document.getElementById("points").innerHTML = rebirth;
+                        document.getElementById("autorebirthamount").innerHTML = autorebirthamount;
                         document.getElementById("autorebirth").innerHTML = autorebirth;
                     }
                 }
@@ -105,16 +118,24 @@
                         document.getElementById("rebirthamount").innerHTML = rebirthamount;
                     },10);
                     setInterval(function() {
-                        rebirth = autorebirth;
+                        rebirth += autorebirth * (Math.sqrt(finites) + 1);
                         document.getElementById("rebirth").innerHTML = rebirth;
-                    },100);
+                    },10);
                     setInterval(function() {
-                        rebirth = autorebirth;
-                        document.getElementById("rebirth").innerHTML = rebirth;
-                    },100);
-                    setInterval(function() {
-                        superpoints += Math.floor(rebirth / 1000000) / 10;
+                        superpoints += Math.floor(rebirth / 1000000);
                         document.getElementById("superpoints").innerHTML = superpoints;
+                    },500);
+                    setInterval(function() {
+                        finites += Math.floor(rebirth / 10000000);
+                        document.getElementById("finites").innerHTML = finites;
+                    },500);
+                    setInterval(function() {
+                        finites += finitesbuff;
+                        document.getElementById("finites").innerHTML = finites;
+                    },500);
+                    setInterval(function() {
+                        rebirth += finites;
+                        document.getElementById("rebirth").innerHTML = rebirth;
                     },100);
 
                 document.getElementById("points").innerHTML = points;
@@ -136,7 +157,7 @@
                         You Will Get <span id ="rebirthamount">0</span> Rebirth(s). | Amount: <span id ="rebirth">0</span>
                     </button>
                     <button onclick="buyAutoRebirth()" style="background-color: #808080">
-                        Auto Rebirths: <span id ="autorebirthamount">0</span> Rebirths | Amount: <span id ="autorebirth">0</span>
+                        Auto Rebirths: <span id ="autorebirthamount">1000</span> Rebirths | Amount: <span id ="autorebirth">0</span>
                     </button>
                     </div>
                     <br>
@@ -145,6 +166,17 @@
                     <div style="text-align: center; color: #008800; outline-width: 5px;outline-style:auto;outline-color: #ffffff;">
                         <h1>Super Points: <span id ="superpoints">0</span></h1>
                         <p>(Unlocked at 1,000,000 Rebirths)</p>
+                        <hr>
+                        <h1>Finites: <span id ="finites">0</span></h1>
+                        <p>(Unlocked at 10,000,000 Rebirths)</p>
+                        <br>
+                    </div>
+                    <br>
+                    <div style="text-align: center;">
+                        <button onclick="FinitesBuff()" style="background-color: #008800">
+                            Finites Buff: <span id ="finitesbuffcost">1000</span> Super Points | Amount: <span id ="finitesbuff">0</span>
+                        </button>
+                        <h2>The only goal (for now) is to get 10 finites buffs.</h2>
                     </div>
     </body>
 </html>
