@@ -1,5 +1,8 @@
+<!DOCTYPE = html>
+
 <html>
         <head>
+            <meta charset="UTF-8">
             <title>A Basic Incremental Game</title>
             <style> 
             body{
@@ -104,6 +107,48 @@
                     }
                 }
 
+                function saveGame() {
+                    var gameSave = {
+                        points: points,
+                        upgrade: upgrade,
+                        upgradecost: upgradecost,
+                        autoupgrade: autoupgrade,
+                        autoupgradecost: autoupgradecost,
+                        rebirth: rebirth,
+                        rebirthamount: rebirthamount,
+                        autorebirth: rebirthamount,
+                        autorebirthamount: autorebirthamount,
+                        superpoints: superpoints,
+                        finites: finites,
+                        finitesbuff: finitesbuff,
+                        finitesbuffcost: finitesbuffcost
+                    };
+                    localStorage.setItem("gameSave", JSON.stringify(gameSave));
+                }
+
+                function loadGame() {
+                    var savedGame = JSON.parse(localStorage.getItem("gameSave"));
+                    if (typeof savedGame.score !== "undefined") score = savedGame.score;
+                    if (typeof savedGame.upgrade !== "undefined") upgrade = savedGame.upgrade;
+                    if (typeof savedGame.upgradecost !== "undefined") upgradecost = savedGame.upgradecost;
+                    if (typeof savedGame.autoupgrade !== "undefined") autoupgrade = savedGame.autoupgrade;
+                    if (typeof savedGame.autoupgradecost !== "undefined") autoupgradecost = savedGame.autoupgradecost;
+                    if (typeof savedGame.superupgrade !== "undefined") superupgrade = savedGame.superupgrade;
+                    if (typeof savedGame.superupgradecost !== "undefined") superupgradecost = savedGame.superupgradecost;
+                    if (typeof savedGame.rebirth !== "undefined") rebirth = savedGame.rebirth;
+                    if (typeof savedGame.rebirthamount !== "undefined") rebirthamount = savedGame.rebirthamount;
+                    if (typeof savedGame.autorebirth !== "undefined") autorebirth = savedGame.autorebirth;
+                    if (typeof savedGame.autorebirthamount !== "undefined") autorebirthamount = savedGame.autorebirthamount;
+                    if (typeof savedGame.superpoints !== "undefined") superpoints = savedGame.superpoints;
+                    if (typeof savedGame.finites !== "undefined") finites = savedGame.finites;
+                    if (typeof savedGame.finitesbuff !== "undefined") finitesbuff = savedGame.finitesbuff;
+                    if (typeof savedGame.finitesbuffcost !== "undefined") finitesbuffcost = savedGame.finitesbuffcost;
+                }
+
+                window.onload = function() {
+                    loadGame();
+                };
+
 
                     setInterval(function() {
                         points = (points + upgrade) + (rebirth + 1);
@@ -137,9 +182,15 @@
                         rebirth += finites;
                         document.getElementById("rebirth").innerHTML = rebirth;
                     },100);
+                    setInterval(function() {
+                        saveGame();
+                    },15000);
 
                 document.getElementById("points").innerHTML = points;
             </script>
+                    <button onclick="saveGame()" style="background-color: #ffffff">
+                        <p>Save Game</p>
+                    </button>
                     <div style="text-align: center;">            <button onclick="buyUpgrade()" style="background-color: #d00000">
                         Upgrade: <span id ="upgradecost">15</span> Points | Amount: <span id ="upgrade">0</span>
                     </button>
