@@ -32,17 +32,44 @@
                 var finites = 0;
                 var finitesbuffcost = 1000;
                 var finitesbuff = 0;
+                var superfinitesbuffcost = 10;
+                var superfinitesbuff = 0;
+                var megafinitesbuffcost = 10;
+                var megafinitesbuff = 0;
+
+                function MegaFinitesBuff() {
+                    if (superfinitesbuff >= megafinitesbuffcost) {
+                        superfinitesbuff -= megafinitesbuffcost;
+                        megafinitesbuff += 1;
+                        megafinitesbuffcost = Math.round(megafinitesbuffcost * 1.5)
+                        document.getElementById("superfinitesbuff").innerHTML = superfinitesbuff;
+                        document.getElementById("megafinitesbuffcost").innerHTML = megafinitesbuffcost;
+                        document.getElementById("megafinitesbuff").innerHTML = megafinitesbuff;
+                    }
+                }
+
+                function SuperFinitesBuff() {
+                    if (finitesbuff >= superfinitesbuffcost) {
+                        finitesbuff -= superfinitesbuffcost;
+                        superfinitesbuff += 1;
+                        superfinitesbuffcost = Math.round(superfinitesbuffcost * 1.5)
+                        document.getElementById("superfinitesbuff").innerHTML = superfinitesbuff;
+                        document.getElementById("superfinitesbuffcost").innerHTML = superfinitesbuffcost;
+                        document.getElementById("finitesbuff").innerHTML = finitesbuff;
+                    }
+                }
 
                 function FinitesBuff() {
                     if (superpoints >= finitesbuffcost) {
                         superpoints -= finitesbuffcost;
                         finitesbuff += 1;
                         finitesbuffcost = Math.round(finitesbuffcost * 1.45)
-                        document.getElementById("points").innerHTML = rebirth;
+                        document.getElementById("superpoints").innerHTML = superpoints;
                         document.getElementById("finitesbuffcost").innerHTML = finitesbuffcost;
                         document.getElementById("finitesbuff").innerHTML = finitesbuff;
                     }
                 }
+
                 function buyAutoRebirth() {
                     if (rebirth >= autorebirthamount) {
                         rebirth -= autorebirthamount;
@@ -116,12 +143,16 @@
                         autoupgradecost: autoupgradecost,
                         rebirth: rebirth,
                         rebirthamount: rebirthamount,
-                        autorebirth: rebirthamount,
+                        autorebirth: autorebirth,
                         autorebirthamount: autorebirthamount,
                         superpoints: superpoints,
                         finites: finites,
                         finitesbuff: finitesbuff,
-                        finitesbuffcost: finitesbuffcost
+                        finitesbuffcost: finitesbuffcost,
+                        superfinitesbuff: superfinitesbuff,
+                        superfinitesbuffcost: superfinitesbuffcost,
+                        megafinitesbuff: megafinitesbuff,
+                        megafinitesbuffcost: megafinitesbuffcost
                     };
                     localStorage.setItem("gameSave", JSON.stringify(gameSave));
                 }
@@ -142,7 +173,11 @@
                     if (typeof savedGame.superpoints !== "undefined") superpoints = savedGame.superpoints;
                     if (typeof savedGame.finites !== "undefined") finites = savedGame.finites;
                     if (typeof savedGame.finitesbuff !== "undefined") finitesbuff = savedGame.finitesbuff;
-                    if (typeof savedGame.finitesbuffcost !== "undefined") finitesbuffcost = savedGame.finitesbuffcost;
+                    if (typeof savedGame.finitesbuffcost !== "undefined") finitesbuffcost = savedGame.finitesbuffcost;                   if (typeof savedGame.finitesbuff !== "undefined") finitesbuff = savedGame.finitesbuff;
+                    if (typeof savedGame.superfinitesbuffcost !== "undefined") superfinitesbuffcost = savedGame.superfinitesbuffcost;
+                    if (typeof savedGame.superfinitesbuff !== "undefined") superfinitesbuff = savedGame.superfinitesbuff;
+                    if (typeof savedGame.megafinitesbuffcost !== "undefined") megafinitesbuffcost = savedGame.megafinitesbuffcost;
+                    if (typeof savedGame.megafinitesbuff !== "undefined") megafinitesbuff = savedGame.megafinitesbuff;
                 }
 
                 window.onload = function() {
@@ -165,7 +200,7 @@
                     setInterval(function() {
                         rebirth += autorebirth * (Math.sqrt(finites) + 1);
                         document.getElementById("rebirth").innerHTML = rebirth;
-                    },10);
+                    },50);
                     setInterval(function() {
                         superpoints += Math.floor(rebirth / 1000000);
                         document.getElementById("superpoints").innerHTML = superpoints;
@@ -179,9 +214,13 @@
                         document.getElementById("finites").innerHTML = finites;
                     },500);
                     setInterval(function() {
-                        rebirth += finites;
-                        document.getElementById("rebirth").innerHTML = rebirth;
-                    },100);
+                        finitesbuff += superfinitesbuff;
+                        document.getElementById("finitesbuff").innerHTML = finitesbuff;
+                    },500);
+                    setInterval(function() {
+                        superfinitesbuff += megafinitesbuff;
+                        document.getElementById("superfinitesbuff").innerHTML = superfinitesbuff;
+                    },500);
                     setInterval(function() {
                         saveGame();
                     },15000);
@@ -191,6 +230,7 @@
                     <button onclick="saveGame()" style="background-color: #ffffff">
                         <p>Save Game</p>
                     </button>
+                    <br>
                     <div style="text-align: center;">            <button onclick="buyUpgrade()" style="background-color: #d00000">
                         Upgrade: <span id ="upgradecost">15</span> Points | Amount: <span id ="upgrade">0</span>
                     </button>
@@ -227,7 +267,17 @@
                         <button onclick="FinitesBuff()" style="background-color: #008800">
                             Finite Buff: <span id ="finitesbuffcost">1000</span> Super Points | Amount: <span id ="finitesbuff">0</span>
                         </button>
-                        <h2>The only goal (for now) is to get 10 finite buffs.</h2>
+                        <br>
+                        <br>
+                        <button onclick="SuperFinitesBuff()" style="background-color: #006600">
+                            Super Finite Buff: <span id ="superfinitesbuffcost">10</span> Finite Buffs | Amount: <span id ="superfinitesbuff">0</span>
+                        </button>
+                        <br>
+                        <br>
+                        <button onclick="MegaFinitesBuff()" style="background-color: #004400">
+                            Mega Finite Buff: <span id ="megafinitesbuffcost">10</span> Super Finite Buffs | Amount: <span id ="megafinitesbuff">0</span>
+                        </button>
+                        <h2>The only goal (for now) is to get 10 mega finite buffs.</h2>
                     </div>
     </body>
 </html>
