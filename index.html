@@ -44,7 +44,7 @@
                 var finitialascension = 0;
 
                 function Finitialascension() {
-                    if (incomprehensiblefinitesbuff >= incomprehensiblefinitesbuffcost) {
+                    if (incomprehensiblefinitesbuff >= finitialascentioncost) {
                         incomprehensiblefinitesbuff = 0;
                         incomprehensiblefinitesbuffcost = 10;
                         finitialascension += 1;
@@ -63,6 +63,8 @@
                          buyRebirth()
                          rebirth = 0
                          finitialascensioncost = Math.round(finitialascensioncost * 1.35)
+                        document.getElementById("finitialascension").innerHTML = finitialascension;
+                        document.getElementById("finitialascensioncost").innerHTML = finitialascensioncost;
                         document.getElementById("incomprehensiblefinitesbuff").innerHTML = incomprehensiblefinitesbuff;
                         document.getElementById("incomprehensiblefinitesbuffcost").innerHTML = incomprehensiblefinitesbuffcost;
                         document.getElementById("ultrafinitesbuff").innerHTML = ultrafinitesbuff;
@@ -222,6 +224,8 @@
                         ultrafinitesbuff: ultrafinitesbuff,
                         ultrafinitesbuffcost: ultrafinitesbuffcost,
                         incomprehensiblefinitesbuff: incomprehensiblefinitesbuff,
+                        finitialascensioncost: finitialascensioncost,
+                        finitialascension: finitialascension,
                         incomprehensiblefinitesbuffcost: incomprehensiblefinitesbuffcost
                     };
                     localStorage.setItem("gameSave", JSON.stringify(gameSave));
@@ -252,6 +256,8 @@
                     if (typeof savedGame.ultrafinitesbuffcost !== "undefined") ultrafinitesbuffcost = savedGame.ultrafinitesbuffcost;
                     if (typeof savedGame.incomprehensiblefinitesbuff !== "undefined") incomprehensiblefinitesbuff = savedGame.incomprehensiblefinitesbuff;                   
                     if (typeof savedGame.incomprehensiblefinitesbuffcost !== "undefined") incomprehensiblefinitesbuffcost = savedGame.incomprehensiblefinitesbuffcost;
+                    if (typeof savedGame.finitialascension !== "undefined") finitialascension = savedGame.finitialascension;                   
+                    if (typeof savedGame.finitialascensioncost !== "undefined") finitialascensioncost = savedGame.finitialascensioncost;
                 }
 
                 window.onload = function() {
