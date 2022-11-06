@@ -36,6 +36,72 @@
                 var superfinitesbuff = 0;
                 var megafinitesbuffcost = 10;
                 var megafinitesbuff = 0;
+                var ultrafinitesbuffcost = 10;
+                var ultrafinitesbuff = 0;
+                var incomprehensiblefinitesbuffcost = 10;
+                var incomprehensiblefinitesbuff = 0;
+                var finitialascensioncost = 25;
+                var finitialascension = 0;
+
+                function Finitialascension() {
+                    if (incomprehensiblefinitesbuff >= incomprehensiblefinitesbuffcost) {
+                        incomprehensiblefinitesbuff = 0;
+                        incomprehensiblefinitesbuffcost = 10;
+                        finitialascension += 1;
+                         autorebirthamount = 1000;
+                         autorebirth = 0;
+                         superpoints = 0;
+                         finites = 0;
+                         finitesbuffcost = 1000;
+                         finitesbuff = 0;
+                         superfinitesbuffcost = 10;
+                         superfinitesbuff = 0;
+                         megafinitesbuffcost = 10;
+                         megafinitesbuff = 0;
+                         ultrafinitesbuffcost = 10;
+                         ultrafinitesbuff = 0;
+                         buyRebirth()
+                         rebirth = 0
+                         finitialascensioncost = Math.round(finitialascensioncost * 1.35)
+                        document.getElementById("incomprehensiblefinitesbuff").innerHTML = incomprehensiblefinitesbuff;
+                        document.getElementById("incomprehensiblefinitesbuffcost").innerHTML = incomprehensiblefinitesbuffcost;
+                        document.getElementById("ultrafinitesbuff").innerHTML = ultrafinitesbuff;
+                        document.getElementById("ultrafinitesbuffcost").innerHTML = ultrafinitesbuffcost;
+                        document.getElementById("megafinitesbuff").innerHTML = megafinitesbuff;
+                        document.getElementById("megafinitesbuffcost").innerHTML = megafinitesbuffcost;
+                        document.getElementById("superfinitesbuff").innerHTML = superfinitesbuff;
+                        document.getElementById("superfinitesbuffcost").innerHTML = superfinitesbuffcost;
+                        document.getElementById("finitesbuff").innerHTML = finitesbuff;
+                        document.getElementById("finitesbuffcost").innerHTML = finitesbuffcost;
+                        document.getElementById("finites").innerHTML = finites;
+                        document.getElementById("superpoints").innerHTML = superpoints;
+                        document.getElementById("autorebirth").innerHTML = autorebirth;
+                        document.getElementById("autorebirthamount").innerHTML = autorebirthamount;
+                        document.getElementById("rebirth").innerHTML = rebirth;
+                    }
+                }
+
+                function IncomprehensibleFinitesBuff() {
+                    if (ultrafinitesbuff >= incomprehensiblefinitesbuffcost) {
+                        ultrafinitesbuff -= incomprehensiblefinitesbuffcost;
+                        incomprehensiblefinitesbuff += 1;
+                        incomprehensiblefinitesbuffcost = Math.round(incomprehensiblefinitesbuffcost * 1.5)
+                        document.getElementById("incomprehensiblefinitesbuff").innerHTML = incomprehensiblefinitesbuff;
+                        document.getElementById("incomprehensiblefinitesbuffcost").innerHTML = incomprehensiblefinitesbuffcost;
+                        document.getElementById("ultrafinitesbuff").innerHTML = ultrafinitesbuff;
+                    }
+                }
+
+                function UltraFinitesBuff() {
+                    if (megafinitesbuff >= ultrafinitesbuffcost) {
+                        megafinitesbuff -= ultrafinitesbuffcost;
+                        ultrafinitesbuff += 1;
+                        ultrafinitesbuffcost = Math.round(ultrafinitesbuffcost * 1.5)
+                        document.getElementById("ultrafinitesbuff").innerHTML = ultrafinitesbuff;
+                        document.getElementById("ultrafinitesbuffcost").innerHTML = ultrafinitesbuffcost;
+                        document.getElementById("megafinitesbuff").innerHTML = megafinitesbuff;
+                    }
+                }
 
                 function MegaFinitesBuff() {
                     if (superfinitesbuff >= megafinitesbuffcost) {
@@ -152,7 +218,11 @@
                         superfinitesbuff: superfinitesbuff,
                         superfinitesbuffcost: superfinitesbuffcost,
                         megafinitesbuff: megafinitesbuff,
-                        megafinitesbuffcost: megafinitesbuffcost
+                        megafinitesbuffcost: megafinitesbuffcost,
+                        ultrafinitesbuff: ultrafinitesbuff,
+                        ultrafinitesbuffcost: ultrafinitesbuffcost,
+                        incomprehensiblefinitesbuff: incomprehensiblefinitesbuff,
+                        incomprehensiblefinitesbuffcost: incomprehensiblefinitesbuffcost
                     };
                     localStorage.setItem("gameSave", JSON.stringify(gameSave));
                 }
@@ -173,11 +243,15 @@
                     if (typeof savedGame.superpoints !== "undefined") superpoints = savedGame.superpoints;
                     if (typeof savedGame.finites !== "undefined") finites = savedGame.finites;
                     if (typeof savedGame.finitesbuff !== "undefined") finitesbuff = savedGame.finitesbuff;
-                    if (typeof savedGame.finitesbuffcost !== "undefined") finitesbuffcost = savedGame.finitesbuffcost;                   if (typeof savedGame.finitesbuff !== "undefined") finitesbuff = savedGame.finitesbuff;
+                    if (typeof savedGame.finitesbuffcost !== "undefined") finitesbuffcost = savedGame.finitesbuffcost;                   
                     if (typeof savedGame.superfinitesbuffcost !== "undefined") superfinitesbuffcost = savedGame.superfinitesbuffcost;
                     if (typeof savedGame.superfinitesbuff !== "undefined") superfinitesbuff = savedGame.superfinitesbuff;
                     if (typeof savedGame.megafinitesbuffcost !== "undefined") megafinitesbuffcost = savedGame.megafinitesbuffcost;
-                    if (typeof savedGame.megafinitesbuff !== "undefined") megafinitesbuff = savedGame.megafinitesbuff;
+                    if (typeof savedGame.megafinitesbuff !== "undefined") megafinitesbuff = savedGame.megafinitesbuff;                    
+                    if (typeof savedGame.ultrafinitesbuff !== "undefined") ultrafinitesbuff = savedGame.ultrafinitesbuff;                   
+                    if (typeof savedGame.ultrafinitesbuffcost !== "undefined") ultrafinitesbuffcost = savedGame.ultrafinitesbuffcost;
+                    if (typeof savedGame.incomprehensiblefinitesbuff !== "undefined") incomprehensiblefinitesbuff = savedGame.incomprehensiblefinitesbuff;                   
+                    if (typeof savedGame.incomprehensiblefinitesbuffcost !== "undefined") incomprehensiblefinitesbuffcost = savedGame.incomprehensiblefinitesbuffcost;
                 }
 
                 window.onload = function() {
@@ -210,17 +284,25 @@
                         document.getElementById("finites").innerHTML = finites;
                     },500);
                     setInterval(function() {
-                        finites += finitesbuff;
+                        finites += finitesbuff * (finitialascension++);
                         document.getElementById("finites").innerHTML = finites;
-                    },500);
+                    },50);
                     setInterval(function() {
-                        finitesbuff += superfinitesbuff;
+                        finitesbuff += superfinitesbuff * (finitialascension++);
                         document.getElementById("finitesbuff").innerHTML = finitesbuff;
-                    },500);
+                    },50);
                     setInterval(function() {
-                        superfinitesbuff += megafinitesbuff;
+                        superfinitesbuff += megafinitesbuff * (finitialascension++);
                         document.getElementById("superfinitesbuff").innerHTML = superfinitesbuff;
-                    },500);
+                    },50);
+                    setInterval(function() {
+                        megafinitesbuff += ultrafinitesbuff * (finitialascension++);
+                        document.getElementById("megafinitesbuff").innerHTML = megafinitesbuff;
+                    },50);
+                    setInterval(function() {
+                        ultrafinitesbuff += incomprehensiblefinitesbuff * (finitialascension++);
+                        document.getElementById("ultrafinitesbuff").innerHTML = ultrafinitesbuff;
+                    },50);
                     setInterval(function() {
                         saveGame();
                     },15000);
@@ -277,7 +359,25 @@
                         <button onclick="MegaFinitesBuff()" style="background-color: #004400">
                             Mega Finite Buff: <span id ="megafinitesbuffcost">10</span> Super Finite Buffs | Amount: <span id ="megafinitesbuff">0</span>
                         </button>
-                        <h2>The only goal (for now) is to get 10 mega finite buffs.</h2>
+                        <br>
+                        <br>
+                        <button onclick="UltraFinitesBuff()" style="background-color: #002200; color: #ffffff; border-color: #ffffff;">
+                            Ultra Finite Buff: <span id ="ultrafinitesbuffcost">10</span> Mega Finite Buffs | Amount: <span id ="ultrafinitesbuff">0</span>
+                        </button>
+                        <br>
+                        <br>
+                        <button onclick="IncomprehensibleFinitesBuff()" style="background-color: #000000; color: #ffffff; border-color: #ffffff;">
+                            Incomprehensible Finite Buff: <span id ="incomprehensiblefinitesbuffcost">10</span> Ultra Finite Buffs | Amount: <span id ="incomprehensiblefinitesbuff">0</span>
+                        </button>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <button onclick="Finitialascension()" style="background-color: #00aa00; color: #ffffff; border-color: #ffffff; height: 50px;">
+                            Finitial Ascension: <span id ="finitialascensioncost">25</span> Incomprehensible Finite Buffs | Amount: <span id ="finitialascens+
+                            ion">0</span>
+                        </button>
+                        <h2>The only goal (for now) is to get 5 finitial ascensions.</h2>
                     </div>
     </body>
 </html>
