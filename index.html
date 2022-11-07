@@ -12,12 +12,11 @@
             </style>
         </head>
     <body>
-        <div style="text-align: center;">
+        <div style="text-align: center; font-family: monospace;">
             <h1>Points: <span id ="points">0</span></h1>
         </div>
             <script>
                 var points = 0;
-
                 var upgradecost = 15;
                 var upgrade = 0;
                 var superupgradecost = 25;
@@ -42,6 +41,20 @@
                 var incomprehensiblefinitesbuff = 0;
                 var finitialascensioncost = 25;
                 var finitialascension = 0;
+                var universecost = 5;
+                var universe = 0;
+                var universaltime = 0;
+
+                function Universe() {
+                    if (finitialascension >= universecost) {
+                        finitialascension -= universecost;
+                        universe += 1;
+                        universecost = Math.round(universecost * 1.5)
+                        document.getElementById("universe").innerHTML = universe;
+                        document.getElementById("universecost").innerHTML = universecost;
+                        document.getElementById("finitialascension").innerHTML = finitialascension;
+                    }
+                }
 
                 function Finitialascension() {
                     if (incomprehensiblefinitesbuff >= finitialascensioncost) {
@@ -49,7 +62,7 @@
                         incomprehensiblefinitesbuffcost = 10;
                         finitialascension += 1;
                         autorebirthamount = 1000;
-                        autorebirth = (finitialascension + 1) * 2;
+                        autorebirth = (finitialascension + 1) / 100;
                         superpoints = 0;
                         finites = 0;
                         finitesbuffcost = 1000;
@@ -61,7 +74,7 @@
                         ultrafinitesbuffcost = 10;
                         ultrafinitesbuff = 0;
                         buyRebirth()
-                        rebirth = 0
+                        rebirth = finitialascension + 1;
                         finitialascensioncost = Math.round(finitialascensioncost * 1.35)
                         document.getElementById("finitialascension").innerHTML = finitialascension;
                         document.getElementById("finitialascensioncost").innerHTML = finitialascensioncost;
@@ -226,7 +239,9 @@
                         incomprehensiblefinitesbuff: incomprehensiblefinitesbuff,
                         finitialascensioncost: finitialascensioncost,
                         finitialascension: finitialascension,
-                        incomprehensiblefinitesbuffcost: incomprehensiblefinitesbuffcost
+                        incomprehensiblefinitesbuffcost: incomprehensiblefinitesbuffcost,
+                        universecost: universecost,
+                        universe: universe
                     };
                     localStorage.setItem("gameSave", JSON.stringify(gameSave));
                 }
@@ -258,6 +273,9 @@
                     if (typeof savedGame.incomprehensiblefinitesbuffcost !== "undefined") incomprehensiblefinitesbuffcost = savedGame.incomprehensiblefinitesbuffcost;
                     if (typeof savedGame.finitialascension !== "undefined") finitialascension = savedGame.finitialascension;                   
                     if (typeof savedGame.finitialascensioncost !== "undefined") finitialascensioncost = savedGame.finitialascensioncost;
+                    if (typeof savedGame.universe !== "undefined") universe = savedGame.universe;                   
+                    if (typeof savedGame.universecost !== "undefined") universecost = savedGame.universecost;
+                    if (typeof savedGame.universaltime !== "undefined") universaltime = savedGame.universaltime;   
                 }
 
                 window.onload = function() {
@@ -310,39 +328,47 @@
                         document.getElementById("ultrafinitesbuff").innerHTML = ultrafinitesbuff;
                     },50);
                     setInterval(function() {
+                        finitialascension += universe;
+                        universaltime += Math.sqrt(universe)
+                        document.getElementById("finitialascension").innerHTML = finitialascension;
+                        document.getElementById("universaltime").innerHTML = universaltime;
+                    },100);
+                    setInterval(function() {
                         saveGame();
                     },15000);
 
                 document.getElementById("points").innerHTML = points;
             </script>
-                    <button onclick="saveGame()" style="background-color: #ffffff">
+                    <button onclick="saveGame()" style="background-color: #ffffff;  font-family: monospace;">
                         <p>Save Game</p>
                     </button>
                     <br>
-                    <div style="text-align: center;">            <button onclick="buyUpgrade()" style="background-color: #d00000">
+                    <br>
+                    <div style="text-align: center; font-family: monospace;">
+                    <button onclick="buyUpgrade()" style="background-color: #d00000; font-family: monospace;">
                         Upgrade: <span id ="upgradecost">15</span> Points | Amount: <span id ="upgrade">0</span>
                     </button>
-                    <button onclick="buyAutoUpgrade()" style="background-color: #808080">
+                    <button onclick="buyAutoUpgrade()" style="background-color: #808080; font-family: monospace;">
                         Auto Upgrade: <span id ="autoupgradecost">250</span> Points | Amount: <span id ="autoupgrade">0</span>
                     </button>
                     <br>
                     <br>
-                    <button onclick="buySuperUpgrade()" style="background-color: #0000ff">
+                    <button onclick="buySuperUpgrade()" style="background-color: #0000ff; font-family: monospace;">
                         Super Upgrade: <span id ="superupgradecost">25</span> Upgrades | Amount: <span id ="superupgrade">0</span>
                     </button>
                     <br>
                     <br>
-                    <button onclick="buyRebirth()" style="background-color: #0088ff">
+                    <button onclick="buyRebirth()" style="background-color: #0088ff; font-family: monospace;">
                         You Will Get <span id ="rebirthamount">0</span> Rebirth(s). | Amount: <span id ="rebirth">0</span>
                     </button>
-                    <button onclick="buyAutoRebirth()" style="background-color: #808080">
+                    <button onclick="buyAutoRebirth()" style="background-color: #808080; font-family: monospace;">
                         Auto Rebirths: <span id ="autorebirthamount">1000</span> Rebirths | Amount: <span id ="autorebirth">0</span>
                     </button>
                     </div>
                     <br>
                     <br>
                     <br>
-                    <div style="text-align: center; color: #008800; outline-width: 5px;outline-style:auto;outline-color: #ffffff;">
+                    <div style="text-align: center; color: #008800; outline-width: 5px;outline-style:auto;outline-color: #ffffff; font-family: monospace;">
                         <h1>Super Points: <span id ="superpoints">0</span></h1>
                         <p>(Unlocked at 1,000,000 Rebirths)</p>
                         <hr>
@@ -352,37 +378,45 @@
                     </div>
                     <br>
                     <div style="text-align: center;">
-                        <button onclick="FinitesBuff()" style="background-color: #008800">
+                        <button onclick="FinitesBuff()" style="background-color: #008800; font-family: monospace;">
                             Finite Buff: <span id ="finitesbuffcost">1000</span> Super Points | Amount: <span id ="finitesbuff">0</span>
                         </button>
                         <br>
                         <br>
-                        <button onclick="SuperFinitesBuff()" style="background-color: #006600">
+                        <button onclick="SuperFinitesBuff()" style="background-color: #006600; font-family: monospace;">
                             Super Finite Buff: <span id ="superfinitesbuffcost">10</span> Finite Buffs | Amount: <span id ="superfinitesbuff">0</span>
                         </button>
                         <br>
                         <br>
-                        <button onclick="MegaFinitesBuff()" style="background-color: #004400">
+                        <button onclick="MegaFinitesBuff()" style="background-color: #004400; font-family: monospace;">
                             Mega Finite Buff: <span id ="megafinitesbuffcost">10</span> Super Finite Buffs | Amount: <span id ="megafinitesbuff">0</span>
                         </button>
                         <br>
                         <br>
-                        <button onclick="UltraFinitesBuff()" style="background-color: #002200; color: #ffffff; border-color: #ffffff;">
+                        <button onclick="UltraFinitesBuff()" style="background-color: #002200; color: #ffffff; border-color: #ffffff; font-family: monospace;">
                             Ultra Finite Buff: <span id ="ultrafinitesbuffcost">10</span> Mega Finite Buffs | Amount: <span id ="ultrafinitesbuff">0</span>
                         </button>
                         <br>
                         <br>
-                        <button onclick="IncomprehensibleFinitesBuff()" style="background-color: #000000; color: #ffffff; border-color: #ffffff;">
+                        <button onclick="IncomprehensibleFinitesBuff()" style="background-color: #000000; color: #ffffff; border-color: #ffffff; font-family: monospace;">
                             Incomprehensible Finite Buff: <span id ="incomprehensiblefinitesbuffcost">10</span> Ultra Finite Buffs | Amount: <span id ="incomprehensiblefinitesbuff">0</span>
                         </button>
                         <br>
                         <br>
                         <br>
                         <br>
-                        <button onclick="Finitialascension()" style="background-color: #00aa00; color: #ffffff; border-color: #ffffff; height: 50px;">
+                        <button onclick="Finitialascension()" style="background-color: #00aa00; color: #000000; border-color: #ffffff; height: 50px; font-family: monospace;">
                             Finitial Ascension: <span id ="finitialascensioncost">25</span> Incomprehensible Finite Buffs | Amount: <span id ="finitialascension">0</span>
                         </button>
-                        <h2>The only goal (for now) is to get 5 finitial ascensions.</h2>
+                        <br>
+                        <br>
+                        <button onclick="Universe()" style="background-color: #ff00ff; color: #000000; font-family: monospace;">
+                            Universe: <span id ="universecost">5</span> finitial ascensions | Amount: <span id ="universe">0</span>
+                        </button>
+                        <h1 style="color: #ff44ff; font-family: monospace;">
+                            Universal Time: <span id ="universaltime">0</span>
+                        </h1>
+                        <h2 style="font-family: monospace;">The only goal (for now) is to get 50,000 universal time.</h2>
                     </div>
     </body>
 </html>
