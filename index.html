@@ -248,7 +248,7 @@
 
                 function loadGame() {
                     var savedGame = JSON.parse(localStorage.getItem("gameSave"));
-                    if (typeof savedGame.score !== "undefined") score = savedGame.score;
+                    if (typeof savedGame.points !== "undefined") points = savedGame.points;
                     if (typeof savedGame.upgrade !== "undefined") upgrade = savedGame.upgrade;
                     if (typeof savedGame.upgradecost !== "undefined") upgradecost = savedGame.upgradecost;
                     if (typeof savedGame.autoupgrade !== "undefined") autoupgrade = savedGame.autoupgrade;
@@ -332,6 +332,10 @@
                         universaltime += Math.sqrt(universe)
                         document.getElementById("finitialascension").innerHTML = finitialascension;
                         document.getElementById("universaltime").innerHTML = universaltime;
+                    },100);
+                    setInterval(function() {
+                        finitialascension += -10;
+                        document.getElementById("finitialascension").innerHTML = finitialascension;
                     },100);
                     setInterval(function() {
                         saveGame();
