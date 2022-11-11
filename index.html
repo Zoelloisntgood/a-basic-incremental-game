@@ -44,6 +44,7 @@
                 var universecost = 5;
                 var universe = 0;
                 var universaltime = 0;
+                var timelevel = 0;
 
                 function Universe() {
                     if (finitialascension >= universecost) {
@@ -62,7 +63,7 @@
                         incomprehensiblefinitesbuffcost = 10;
                         finitialascension += 1;
                         autorebirthamount = 1000;
-                        autorebirth = (finitialascension + 1) / 100;
+                        autorebirth = (finitialascension + 1) * 20;
                         superpoints = 0;
                         finites = 0;
                         finitesbuffcost = 1000;
@@ -241,7 +242,8 @@
                         finitialascension: finitialascension,
                         incomprehensiblefinitesbuffcost: incomprehensiblefinitesbuffcost,
                         universecost: universecost,
-                        universe: universe
+                        universe: universe,
+                        timelevel: timelevel
                     };
                     localStorage.setItem("gameSave", JSON.stringify(gameSave));
                 }
@@ -275,7 +277,8 @@
                     if (typeof savedGame.finitialascensioncost !== "undefined") finitialascensioncost = savedGame.finitialascensioncost;
                     if (typeof savedGame.universe !== "undefined") universe = savedGame.universe;                   
                     if (typeof savedGame.universecost !== "undefined") universecost = savedGame.universecost;
-                    if (typeof savedGame.universaltime !== "undefined") universaltime = savedGame.universaltime;   
+                    if (typeof savedGame.universaltime !== "undefined") universaltime = savedGame.universaltime; 
+                    if (typeof savedGame.timelevel !== "undefined") timelevel = savedGame.timelevel;   
                 }
 
                 window.onload = function() {
@@ -288,7 +291,7 @@
                         document.getElementById("points").innerHTML = points;
                     },100);
                     setInterval(function() {
-                        upgrade += autoupgrade * (superupgrade + 1) * (rebirth + 1);
+                        upgrade += autoupgrade * (superupgrade + 1) * (rebirth + 1) * ((universaltime ^ 2)+ 1);
                         document.getElementById("upgrade").innerHTML = upgrade;
                     },100);
                     setInterval(function() {
@@ -330,12 +333,18 @@
                     setInterval(function() {
                         finitialascension += universe;
                         universaltime += Math.sqrt(universe)
+                        universe += universaltime * (timelevel + 1)
                         document.getElementById("finitialascension").innerHTML = finitialascension;
                         document.getElementById("universaltime").innerHTML = universaltime;
+                        document.getElementById("universe").innerHTML = universe;
                     },100);
                     setInterval(function() {
                         finitialascension += -10;
                         document.getElementById("finitialascension").innerHTML = finitialascension;
+                    },100);
+                    setInterval(function() {
+                        timelevel += Math.log2(universaltime);
+                        document.getElementById("timelevel").innerHTML = timelevel;
                     },100);
                     setInterval(function() {
                         saveGame();
@@ -420,7 +429,10 @@
                         <h1 style="color: #ff44ff; font-family: monospace;">
                             Universal Time: <span id ="universaltime">0</span>
                         </h1>
-                        <h2 style="font-family: monospace;">The only goal (for now) is to get 50,000 universal time.</h2>
+                        <h1 style="color: #ff88ff; font-family: monospace;">
+                            Super Universal Time: <span id ="timelevel">0</span>
+                        </h1>
+                        <h2 style="font-family: monospace;">The only goal (for now) is to get 50,000 super universal time.</h2>
                     </div>
     </body>
 </html>
