@@ -40,7 +40,7 @@
                 var incomprehensiblefinitesbuffcost = 10;
                 var incomprehensiblefinitesbuff = 0;
                 var finitialascensioncost = 25;
-                var finitialascension = 0;
+                var finitialascension = 60;
                 var universecost = 5;
                 var universe = 0;
                 var universaltime = 0;
@@ -339,11 +339,11 @@
                         document.getElementById("universe").innerHTML = universe;
                     },100);
                     setInterval(function() {
-                        finitialascension += -10;
+                        finitialascension -= 10;
                         document.getElementById("finitialascension").innerHTML = finitialascension;
                     },100);
                     setInterval(function() {
-                        timelevel += Math.log2(universaltime);
+                        timelevel += Math.log2(universaltime + 2);
                         document.getElementById("timelevel").innerHTML = timelevel;
                     },100);
                     setInterval(function() {
